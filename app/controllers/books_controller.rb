@@ -60,6 +60,7 @@ class BooksController < ApplicationController
     query = 'INSERT INTO books (isbn,title,publisher_id,publication_year,selling_price,category,threshold,stock) VALUES ("'+@isbn+'","'+@title+'",'+@publisher+','+@year+','+@price+',"'+@category+'",'+@threshold+','+@stock+');'
     puts query
     client.query(query)
+    redirect_to books_path
   end
    def destroy
        @given_id = params[:id]
@@ -73,12 +74,6 @@ class BooksController < ApplicationController
    end
   def update
     @given_id = params[:id]
-    query = 'DELETE FROM books WHERE id = '+@given_id+';'
-    client = Mysql2::Client.new(:host => "localhost", :username => "root")
-    client.query("use BookStore")
-    client.query(query)
-
-
     @title = params[:title]
     @isbn = params[:isbn]
     @publisher = params[:publisher]
@@ -89,17 +84,10 @@ class BooksController < ApplicationController
     @threshold = params[:threshold]
     client = Mysql2::Client.new(:host => "localhost", :username => "root")
     client.query("use BookStore")
-    query = 'UPDATE books SET isbn = +"'+@isbn+'",title = +"'+@title+'",selling_price = +'+@price+',publication_year = +'+@year+',category = +"'+@category+'",threshold = +'+@threshold+',stock = +'+@stock+' WHERE id = '+params[:id]+';'
+    query = 'UPDATE books SET isbn = "'+@isbn+'",title = "'+@title+'",selling_price = '+@price+',publication_year = '+@year+',category = "'+@category+'",threshold = '+@threshold+',stock = '+@stock+' WHERE id = '+params[:id]+';'
     puts query
     client.query(query)
-
-
-    # if @article.update(article_params)
-    #   flash[:success] = "Article was successfully Updated!"
-    #   redirect_to article_path(@article)
-    # else
-    #   render 'new'
-    # end
+    redirect_to book_path(params[:id])
   end
 
   private
