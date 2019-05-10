@@ -1,13 +1,17 @@
-<h1>Hello From Books</h1>
-<ul>
-  <% @posts.each do |record| %>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg" onerror="this.src='/assets/defcover.jpg'">
-      <div class="card-body">
-        <h5 class="card-title"><%= record["title"] %></h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="container">
+  <div>
+    <h1 align="center">Hello From Books</h1>
+  </div>
+  <div class="row">
+    <% @posts.each do |record| %>
+      <div class="col-4">
+        <div class="card" style="width: 10rem;">
+          <img class="card-img-top" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+          <div class="card-body">
+            <%= link_to record["title"],  book_path(record["id"], class: "card-title")%>
+          </div>
+        </div>
       </div>
-    </div>
-  <% end %>
-</ul>
+    <% end %>
+  </div>
+</div>

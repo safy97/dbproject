@@ -1,0 +1,9 @@
+<h1 align="center"><%= @book["title"] %></h1>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <img class="rounded mx-auto d-block" src="http://covers.openlibrary.org/b/isbn/<%= @book["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+  </div>
+  <%= link_to "Edit This Article", edit_book_path(@book["id"]), class: "btn btn-xs btn-primary" %>
+  <%= link_to "Delete", book_path(@book["id"]), method: :delete, data:{confirm: "Sure?"}, class:"btn btn-xs btn-danger" %>
+</div>
+<h4 align="center"><%= @book["publication_year"] %></h4>
