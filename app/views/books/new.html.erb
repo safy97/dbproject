@@ -1,0 +1,81 @@
+<div class="container">
+  <% flash.each do |name, msg| %>
+    <div class="alert alert-<%= name %>">
+      <%= msg %>
+    </div>
+  <% end %>
+</div>
+<div class="container">
+  <h1 class="center">Create Book</h1>
+  <%= form_with(url: books_path, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :Title %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :title , class: "form-control", placeholder:"Book Title", autofocus: true %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :ISBN %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :isbn, rows:10, class: "form-control", placeholder:"ISBN"%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :publisher %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :publisher, rows:10, class: "form-control", placeholder:"Publisher ID"%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :Price %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :price, rows:10, class: "form-control", placeholder:"Selling Price"%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :Threshold %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :threshold, rows:10, class: "form-control", placeholder:"Minimum Number Of Copies"%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :Stock %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :stock, rows:10, class: "form-control", placeholder:"Copies In Stock"%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :Category %><br/>
+      </div>
+      <div class="control-label col-sm-2">
+        <%= select("category","category", [ "Science", "Art", "Religion", "History","Geography" ], { include_blank: false },{ :class => "form-control form-control-sm" }) %><br/>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :"Year" %><br/>
+      </div>
+      <div class="control-label col-sm-2">
+        <%= f.select :publication_year, (Time.zone.now.year - 150)..(Time.zone.now.year),{},{ :class => "form-control form-control-sm" } %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="center">
+        <%= f.submit class:"btn btn-dark",:value => "Add Book" %>
+      </div>
+    </div>
+  <% end %>
+</div>
