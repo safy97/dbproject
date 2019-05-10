@@ -10,6 +10,12 @@
   </head>
 
   <body>
+  <%= render 'layouts/navbar'%>
+
+  <%= render "shared/messages" %>
+  <div class="container">
     <%= yield %>
+  </div>
+  <%= render 'layouts/footer'%>
   </body>
 </html>
