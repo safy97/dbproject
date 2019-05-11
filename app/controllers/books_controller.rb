@@ -1,16 +1,19 @@
 class BooksController < ApplicationController
 #  before_action :set_post, only: [:show, :edit, :update, :destroy]
-    before_action :validate_publisher, :validate_isbn, only: [:create]
+    before_action :validate_publisher, :validate_isbn, :validate_authors, only: [:create]
   # GET /posts
   # GET /posts.json
-  def index
-    client = Mysql2::Client.new(:host => "localhost", :username => "root")
-    client.query("use BookStore");
-    records = client.query("SELECT * FROM books")
-    @posts = []
-    records.each do |row|
-      @posts.append row
-    end
+    def index
+      puts "he6a"
+      puts params
+      client = Mysql2::Client.new(:host => "localhost", :username => "root")
+      client.query("use BookStore");
+      records = client.query("SELECT * FROM books")
+      @posts = []
+      records.each do |row|
+        @posts.append row
+        puts @posts
+      end
     end
 
   def show
@@ -32,7 +35,7 @@ class BooksController < ApplicationController
   # GET /posts/1/edit
   def edit
     client = Mysql2::Client.new(:host => "localhost", :username => "root")
-    client.query("use BookStore");
+    client.query("use BookStore")
     records = client.query("SELECT * FROM books WHERE id = #{params[:id]}")
     @book = []
     records.each do |key,book|
@@ -44,8 +47,9 @@ class BooksController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    validate_publisher
-    puts params
+    @authors = params[:authors].split(',').uniq
+    puts "ya wala bas"
+    puts @authors
     @title = params[:title]
     @isbn = params[:isbn]
     @publisher = params[:publisher]
@@ -54,7 +58,6 @@ class BooksController < ApplicationController
     @category = params[:category][:category]
     @stock = params[:stock]
     @threshold = params[:threshold]
-    puts @publisher
     client = Mysql2::Client.new(:host => "localhost", :username => "root")
     client.query("use BookStore")
     query = 'INSERT INTO books (isbn,title,publisher_id,publication_year,selling_price,category,threshold,stock) VALUES ("'+@isbn+'","'+@title+'",'+@publisher+','+@year+','+@price+',"'+@category+'",'+@threshold+','+@stock+');'
@@ -109,6 +112,25 @@ class BooksController < ApplicationController
         redirect_to(new_book_path)
       end
     end
+
+  def validate_authors
+    @authors = params[:authors].split(',').uniq
+    puts "VALIDATION"
+    @count_not_exist = 0
+    @authors.each do |author|
+      client = Mysql2::Client.new(:host => "localhost", :username => "root")
+      client.query("use BookStore")
+      auth = client.query("SELECT * FROM authors WHERE id = #{author}")
+      puts "T3ala hena"
+      if !auth.first
+        @count_not_exist += 1
+      end
+    end
+    if @count_not_exist > 0
+      flash[:danger] = "Author Doesn't Exist..Please Try Again"
+      redirect_to(new_book_path)
+    end
+  end
 
   # # Never trust parameters from the scary internet, only allow the white list through.
   # def post_params

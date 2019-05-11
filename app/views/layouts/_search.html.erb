@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Search</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+    <%= form_with(url: search_path,:html => {class: "center-image form-inline my-2 my-lg-0", role: "form"}) do |f| %>
+      <%= select("searchby","searchby", [ "ISBN", "Title"], { include_blank: false,:selected => "ISBN" },{ :class => "form-control form-control-sm mr-sm-2" }) %>
+      <%= select("category","category", [ "All Categories", "Science","Art","Religion","History","Geography"], { include_blank: false,:selected => "All Categories" },{ :class => "form-control form-control-sm mr-sm-2" }) %>
+      <%= f.text_field :author, class: "form-control mr-sm-2", placeholder: "Author"%>
+      <%= f.text_field :publisher, class: "form-control mr-sm-2", placeholder: "Publisher"%>
+      <%= f.text_field :search, class: "form-control mr-sm-2", placeholder: "Search"%>
+      <%= f.submit  class:"btn btn-outline-secondary my-2 my-sm-0", :value => "Search" %>
+    <% end %>
+  </div>
+</nav>

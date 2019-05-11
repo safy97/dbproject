@@ -1,0 +1,17 @@
+<div class="container">
+  <div>
+    <h1 align="center">Search Result</h1>
+  </div>
+  <div class="row">
+    <% @posts.each do |record| %>
+      <div class="col-4">
+        <div class="card" style="width: 10rem;">
+          <img class="card-img-top" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+          <div class="card-body">
+            <%= link_to record["title"],  book_path(record["id"], class: "card-title")%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
