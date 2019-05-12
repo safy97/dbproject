@@ -1,15 +1,21 @@
-<div class="container">
-  <div>
-    <h1 align="center">Hello From Books</h1>
+<div class="full-width jumbotron jumbotron-fluid">
+  <div class="container">
   </div>
+</div>
+<div class="container">
   <div class="row">
     <% @posts.each do |record| %>
-      <div class="col-4">
-        <div class="card" style="width: 10rem;">
-          <img class="card-img-top" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
-          <div class="card-body">
-            <%= link_to record["title"],  book_path(record["id"], class: "card-title")%>
-          </div>
+      <div class="card text-center full-width">
+        <div class="card-header">
+          <%= link_to record["title"],  book_path(record["id"], class: "card-title")%> <%= record["publication_year"] %>
+        </div>
+        <div class="card-body">
+          <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+          <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
+          <p class="card-text">Category: <%= record["category"] %></p>
+          <p class="card-text">In Stock: <%= record["stock"] %></p>
+          <a href="#" class="btn btn-secondary btn-sm">Add To Cart</a>
+          <a href="#" class="btn btn-secondary btn-sm">Remove From Cart</a>
         </div>
       </div>
     <% end %>

@@ -12,6 +12,20 @@
  * It is generally better to create a new file per style scope.
  *
  */
+
+.small-img{
+  max-height: 200px;
+}
+
+.full-width{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.letter{
+  font-weight: bold;
+  color: bisque;
+  font-family: "Bitstream Vera Sans Mono"
+}
 .center-image{
   margin-left: auto;
   margin-right: auto;
@@ -49,16 +63,17 @@
   text-align: center;
 }
 
+
 .jumbotron{
-  background-image: asset_url('cover_img.jpeg');
+  background-image: asset_url('jumpo.jpg');
   background-size: cover;
   height: 550px;
 }
 
 .jumbotron h1{
-  color: #FFF;
+  color: #CCCCCC;
+  text-outline: #FFFFFF;
   text-align: center;
-  margin-bottom: 30px;
   letter-spacing: -1px;
   font-weight: bold;
 }

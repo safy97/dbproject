@@ -1,0 +1,25 @@
+<div class="container">
+  <div>
+    <h1 align="center">Search Result</h1>
+  </div>
+  <div class="row">
+    <% if @posts != nil %>
+      <% @posts.each do |record| %>
+        <div class="card text-center full-width">
+          <div class="card-header">
+            <%= link_to record["title"],  book_path(record["id"], class: "card-title")%> <%= record["publication_year"] %>
+          </div>
+          <div class="card-body">
+            <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+            <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
+            <p class="card-text">In Stock: <%= record["stock"] %></p>
+            <a href="#" class="btn btn-secondary btn-sm">Add To Cart</a>
+            <a href="#" class="btn btn-secondary btn-sm">Remove From Cart</a>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    <% else %>
+      <h1 align="center">No Books Were Found</h1>
+    <% end %>
+</div>
