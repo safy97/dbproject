@@ -28,6 +28,32 @@ class SessionsController < ApplicationController
   end
 
   def logout
+    @user_id = session[:id]
+    client = Mysql2::Client.new(:host => "localhost", :username => "root")
+    client.query("use BookStore")
+    queryStock = "SELECT * FROM carts WHERE user_id = #{@user_id};"
+    rec11 = client.query(queryStock)
+    rec11.each do |rec1|
+      puts rec1
+      getBook = "SELECT * FROM books WHERE id = #{rec1["book_id"]};"
+      puts getBook
+      strecord = client.query(getBook)
+      @num_stock = 0
+      strecord.each do |rec|
+        puts rec
+        @num_stock = rec["stock"]
+      end
+      update_stock = "UPDATE books SET stock = #{@num_stock+rec1["quantityruby"]} WHERE id = #{rec1["book_id"]};"
+      puts update_stock
+      client.query(update_stock)
+    end
+
+
+
+
+
+    query = "DELETE FROM carts WHERE user_id = #{@user_id};"
+    client.query(query)
     session[:id] = nil
     redirect_to books_path
   end

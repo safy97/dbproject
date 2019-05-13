@@ -1,0 +1,48 @@
+<div class="full-width jumbotron jumbotron-fluid cart">
+  <div class="container">
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <% @total_price = 0 %>
+    <% @posts.each do |record| %>
+      <% @total_price = @total_price + record["selling_price"].to_i*record["quantityruby"].to_i %>
+      <div class="card text-center full-width">
+        <div class="card-header">
+          <%= link_to record["title"],  book_path(record["id"], class: "card-title")%> <%= record["publication_year"] %>
+        </div>
+        <div class="card-body">
+          <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+          <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
+          <p class="card-text">Category: <%= record["category"] %></p>
+          <p class="card-text">In Stock:<span id="stock<%= record["id"] %>"> <%= record["stock"] %></span></p>
+          <p class="card-text">In Cart: <span id="cart<%= record["id"] %>"><%= record["quantityruby"] %></span></p>
+          <input type="hidden" class="hide<%= record["id"] %>" value="<%= record["selling_price"] %>">
+          <p class="card-text"><strong><span>&#36;</span><span id="price<%= record["id"] %>"><%= record["selling_price"].to_i*record["quantityruby"].to_i %></span></strong></p>
+          <% if record["stock"] == 0 %>
+            <% @string1 = " disabled" %>
+          <% else %>
+            <% @string1 = "" %>
+          <% end %>
+          <% if record["quantityruby"] == 0 %>
+            <% @string2 = " disabled" %>
+          <% else %>
+            <% @string2 = "" %>
+          <% end %>
+          <%= link_to "Add Item", "/cart/#{record["id"]}/", method: :post ,class: "btn btn-xs btn-primary add"+record["id"].to_s+@string1  ,remote: true %>
+          <%= link_to "Remove Item", "/cart/#{record["id"]}/", method: :delete, class:"btn btn-xs btn-danger rem"+record["id"].to_s+@string2,remote: true %>
+         </div>
+      </div>
+    <% end %>
+    <div id="ajax" class="center-image badge badge-primary text-wrap" style="width: 10rem;">
+      Total Price: <span>&#36;</span><span id="total_price"><%= @total_price %></span>
+    </div>
+    <% @test = "" %>
+    <% if @total_price == 0 %>
+      <% @test = " disabled" %>
+    <% end %>
+    <div class="container">
+      <%= link_to "Proceed To Payment", "/payment/#{@user_id}/", method: :get ,class: "btn btn-secondary btn-sm btn-block proceed"+@test %>
+    </div>
+  </div>
+</div>

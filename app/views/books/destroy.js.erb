@@ -1,0 +1,17 @@
+var id = <%= @book_id %>
+    id = Number(id);
+var total_price_per_book = Number($("#price"+id).text());
+var total_price = Number($("#total_price").text());
+var in_stock = Number($("#stock"+id).text());
+var in_cart = Number($("#cart"+id).text());
+var item_price = Number($(".hide"+id).val());
+$("#stock"+id).text(in_stock + 1);
+$("#cart"+id).text(in_cart - 1);
+$("#price"+id).text(total_price_per_book - item_price)
+$("#total_price").text(total_price - item_price)
+if($(".add"+id).hasClass("disabled")){
+    $(".add"+id).removeClass("disabled")
+}
+if(in_cart == 1){
+    $(".rem"+id).addClass("disabled")
+}

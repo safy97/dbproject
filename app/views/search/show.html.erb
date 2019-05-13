@@ -1,25 +1,33 @@
-<div class="container">
-  <div>
-    <h1 align="center">Search Result</h1>
+
+<div class="full-width jumbotron jumbotron-fluid searching">
+  <div class="container">
   </div>
+</div>
+<div class="container">
   <div class="row">
-    <% if @posts != nil %>
-      <% @posts.each do |record| %>
-        <div class="card text-center full-width">
-          <div class="card-header">
-            <%= link_to record["title"],  book_path(record["id"], class: "card-title")%> <%= record["publication_year"] %>
-          </div>
-          <div class="card-body">
-            <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
-            <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
-            <p class="card-text">In Stock: <%= record["stock"] %></p>
-            <a href="#" class="btn btn-secondary btn-sm">Add To Cart</a>
-            <a href="#" class="btn btn-secondary btn-sm">Remove From Cart</a>
-          </div>
+    <% if @posts %>
+    <% @posts.each do |record| %>
+      <div class="card text-center full-width">
+        <div class="card-header">
+          <%= link_to record["title"],  book_path(record["id"], class: "card-title")%> <%= record["publication_year"] %>
         </div>
-      <% end %>
+        <div class="card-body">
+          <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
+          <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
+          <p class="card-text">Category: <%= record["category"] %></p>
+          <p class="card-text">In Stock:<span id="stock<%= record["id"] %>"> <%= record["stock"] %></span></p>
+          <input type="hidden" class="hide" value="<%= record["selling_price"] %>">
+          <p class="card-text"><strong><span>&#36;</span><%= record["selling_price"] %></strong></p>
+          <p class="card-text">In Cart: <span id="cart<%= record["id"] %>"><%= record["quantityruby"] %></span></p>
+        </div>
       </div>
-    <% else %>
-      <h1 align="center">No Books Were Found</h1>
     <% end %>
+    <% else %>
+      <div class="card text-center full-width">
+        <div class="card-header">
+          No Result Found!
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

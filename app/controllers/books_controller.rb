@@ -1,14 +1,14 @@
 class BooksController < ApplicationController
-#  before_action :set_post, only: [:show, :edit, :update, :destroy]
-    before_action :validate_publisher, :validate_isbn, :validate_authors, only: [:create]
+  before_action :validate_publisher, :validate_isbn, :validate_authors, only: [:create]
+  before_action :require_admin, only: [:new,:edit,:create,:destroy,:update]
   # GET /posts
   # GET /posts.json
     def index
       puts "he6a"
       puts params
       client = Mysql2::Client.new(:host => "localhost", :username => "root")
-      client.query("use BookStore");
-      records = client.query("SELECT * FROM books")
+      client.query("use BookStore")
+      records = client.query("SELECT * FROM books LEFT JOIN carts ON books.id = carts.book_id;")
       @posts = []
       records.each do |row|
         @posts.append row
@@ -18,7 +18,7 @@ class BooksController < ApplicationController
 
   def show
     client = Mysql2::Client.new(:host => "localhost", :username => "root")
-    client.query("use BookStore");
+    client.query("use BookStore")
     records = client.query("SELECT * FROM books WHERE id = #{params[:id]}")
     @book = []
     records.each do |key,book|
@@ -63,6 +63,12 @@ class BooksController < ApplicationController
     query = 'INSERT INTO books (isbn,title,publisher_id,publication_year,selling_price,category,threshold,stock) VALUES ("'+@isbn+'","'+@title+'",'+@publisher+','+@year+','+@price+',"'+@category+'",'+@threshold+','+@stock+');'
     puts query
     client.query(query)
+    @authors.each do |author|
+      recs = client.query("SELECT * FROM books WHERE isbn = #{@isbn}").first
+      puts "testaa"
+      puts recs
+      client.query("INSERT INTO book_authors VALUES (#{recs["id"]},#{author})")
+    end
     redirect_to books_path
   end
    def destroy

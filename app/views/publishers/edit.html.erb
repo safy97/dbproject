@@ -1,0 +1,41 @@
+<div class="container">
+  <% flash.each do |name, msg| %>
+    <div class="alert alert-<%= name %>">
+      <%= msg %>
+    </div>
+  <% end %>
+</div>
+<div class="container">
+  <h1 class="center">Edit Publisher</h1>
+  <%= form_with  as: :post, url: publisher_path, method: :patch, html: { class: "horizontal-form" } do |f| %>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :name %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :name , class: "form-control", placeholder:"Publisher Name", autofocus: true, value: @publisher["publisher_name"] %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+          <%= f.label :address %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :address, rows:10, class: "form-control", placeholder:"Address",value: @publisher["address"]%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="control-label col-sm-2">
+        <%= f.label :telephone %><br/>
+      </div>
+      <div class="col-sm-8">
+        <%= f.text_field :telephone, rows:10, class: "form-control", placeholder:"Phone",value: @publisher["telephone"]%>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="center">
+        <%= f.submit class:"btn btn-dark",:value => "Edit Publisher" %>
+      </div>
+    </div>
+  <% end %>
+</div>

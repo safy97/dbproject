@@ -1,0 +1,17 @@
+<div class="card" style="margin: 10px;">
+  <div class="card-body">
+    <h5 class="card-title"><%= link_to @publisher["publisher_name"], publisher_path(@publisher["id"]),class: "badge badge-primary"%></h5>
+    <%@publisher.each do |key,val| %>
+      <div class="row">
+        <div class="col-6">
+          <label style="font-weight:bold;"><%= key %></label>
+        </div>
+        <div class="col-6">
+          <%=val %>
+        </div>
+      </div>
+    <%end %>
+    <%= link_to "Edit", edit_publisher_path(@publisher["id"]), class: "btn btn-xs btn-primary" %>
+    <%= link_to "Delete", publisher_path(@publisher["id"]), method: :delete, data:{confirm: "Sure?"}, class:"btn btn-xs btn-danger" %>
+  </div>
+</div>

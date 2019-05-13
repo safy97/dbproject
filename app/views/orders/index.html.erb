@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-12">
-    <%@users.each do |row| %>
+    <%@orders.each do |row| %>
       <div class="card" style="margin: 10px;">
         <div class="card-body">
-          <h5 class="card-title"><%= link_to row["username"], user_path(row["id"]),class: "badge badge-primary"%></h5>
+          <h5 class="card-title"><%= link_to row["title"], book_path(row["book_id"]),class: "badge badge-primary"%></h5>
           <%row.each do |key,val| %>
             <div class="row">
               <div class="col-6">
@@ -15,7 +15,7 @@
               </div>
             </div>
           <%end %>
-          <%= link_to "Promote", "/users/#{row["id"]}/promote",method: :post, class: "btn btn-xs btn-success" %>
+          <%= link_to "Confirm", "/orders/#{row["id"]}",method: :post, class: "btn btn-xs btn-success" %>
         </div>
       </div>
     <% end %>
