@@ -1,5 +1,5 @@
 class UsersController <  ApplicationController
-
+  before_action :require_admin, only: [:promote]
   before_action :use_db
   def index
     @users = @client.query("SELECT * FROM users")
@@ -47,6 +47,23 @@ class UsersController <  ApplicationController
 
   def new
 
+  end
+
+
+  def promote
+    client = Mysql2::Client.new(:host => "localhost", :username => "root")
+    client.query("use BookStore")
+    getUser = "SELECT * FROM users WHERE id = #{params[:id]};"
+    puts getUser
+    record = client.query(getUser).first
+    if record["admin"] == 1
+      flash[:success] = "User is Already Admin"
+      redirect_to users_path
+    else
+      client.query("UPDATE users SET admin = 1 WHERE id = #{params[:id]};")
+      flash[:success] = "User is now Admin"
+      redirect_to users_path
+    end
   end
 
   def create

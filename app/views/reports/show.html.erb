@@ -1,0 +1,79 @@
+<div class="container center">
+  <h1>Top 5 Users Last 3 Months</h1>
+</div>
+<div class="row">
+  <div class="col-12">
+    <%@top5.each do |row| %>
+      <div class="card" style="margin: 10px;">
+        <div class="card-body">
+          <h5 class="card-title center"><%= link_to row["username"], user_path(row["id"]),class: "badge badge-primary"%></h5>
+          <%row.each do |key,val| %>
+            <div class="row">
+              <div class="col-6 center">
+                <label style="font-weight:bold;"><%= key.capitalize %></label>
+              </div>
+
+              <div class="col-6 center">
+                <%=val %>
+              </div>
+            </div>
+          <%end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container center">
+  <h1>Top 10 Books Last 3 Months</h1>
+</div>
+<div class="row">
+  <div class="col-12">
+    <%@top10.each do |row| %>
+      <div class="card" style="margin: 10px;">
+        <div class="card-body">
+          <h5 class="card-title center"><%= link_to row["title"], book_path(row["id"]),class: "badge badge-primary"%></h5>
+          <%row.each do |key,val| %>
+            <div class="row">
+              <div class="col-6 center">
+                <label style="font-weight:bold;"><%= key.capitalize %></label>
+              </div>
+
+              <div class="col-6 center">
+                <%=val %>
+              </div>
+            </div>
+          <%end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="container center">
+  <h1>Total Sales Last Month</h1>
+</div>
+<div class="row">
+  <div class="col-12">
+    <%@prev.each do |row| %>
+      <div class="card" style="margin: 10px;">
+        <div class="card-body">
+          <%row.each do |key,val| %>
+            <div class="row">
+              <div class="col-6 center">
+                <label style="font-weight:bold;">SALES</label>
+              </div>
+
+              <div class="col-6 center">
+                <strong>$<%= val %></strong>
+              </div>
+            </div>
+          <%end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="center">
+  <%= link_to "Download Report" ,'/reports.pdf' %>
+</div>
+

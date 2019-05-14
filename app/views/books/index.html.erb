@@ -13,9 +13,24 @@
           <img class="small-img img-thumbnail rounded float-left" src="http://covers.openlibrary.org/b/isbn/<%= record["isbn"] %>-M.jpg?default=false" onerror="this.src='/assets/defcover.jpg'">
           <h5 class="card-title">ISBN: <%= record["isbn"] %></h5>
           <p class="card-text">Category: <%= record["category"] %></p>
-          <p class="card-text">In Stock: <%= record["stock"] %></p>
-          <a href="#" class="btn btn-secondary btn-sm">Add To Cart</a>
-          <a href="#" class="btn btn-secondary btn-sm">Remove From Cart</a>
+          <p class="card-text">In Stock:<span id="stock<%= record["id"] %>"> <%= record["stock"] %></span></p>
+          <input type="hidden" class="hide" value="<%= record["selling_price"] %>">
+          <p class="card-text"><strong><span>&#36;</span><%= record["selling_price"] %></strong></p>
+          <% if record["stock"] == 0 %>
+            <% @string1 = " disabled" %>
+          <% else %>
+            <% @string1 = "" %>
+          <% end %>
+          <% if record["quantityruby"] == 0 %>
+            <% @string2 = " disabled" %>
+          <% else %>
+            <% @string2 = "" %>
+          <% end %>
+          <% if session[:id] %>
+          <p class="card-text">In Cart: <span id="cart<%= record["id"] %>"><%= record["quantityruby"] %></span></p>
+          <%= link_to "Add To Cart", "/cart/#{record["id"]}/", method: :post ,class: "btn btn-xs btn-primary add"+record["id"].to_s+@string1,remote: true %>
+          <%= link_to "Remove From Cart", "/cart/#{record["id"]}/", method: :delete, class:"btn btn-xs btn-danger rem"+record["id"].to_s+@string2 ,remote: true %>
+           <% end %>
         </div>
       </div>
     <% end %>

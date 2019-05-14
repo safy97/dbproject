@@ -1,4 +1,6 @@
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -12,6 +14,31 @@
  * It is generally better to create a new file per style scope.
  *
  */
+
+
+.carousel-item {
+  height: 100vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.book-icon{
+  margin: 10px;
+  font-size: 1.5em;
+  color: bisque;
+}
+.bg-light{
+  background-color: bisque !important;
+  border-color: #E7E7E7;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+  color: bisque;
+}
 
 .small-img{
   max-height: 200px;
@@ -68,6 +95,18 @@
   background-image: asset_url('jumpo.jpg');
   background-size: cover;
   height: 550px;
+}
+
+.cart{
+  background-image: asset_url('jumpo_cart.jpg');
+}
+
+.proceed{
+  margin-top: 5px;
+}
+
+.searching{
+  background-image: asset_url('searchbook.jpg');
 }
 
 .jumbotron h1{
