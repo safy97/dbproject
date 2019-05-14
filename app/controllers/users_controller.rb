@@ -28,16 +28,16 @@ class UsersController <  ApplicationController
 
   def updatee
 
-    @user= @client.query("select * from users where id = #{params[:session][:id]}")
+    @user= @client.query("select aes_decrypt(user_password,'omarmostafa') as user_pass,id from users where id = #{params[:session][:id]}")
     @row = @user.first
     puts @row
     password = params[:session][:password]
     if password.blank?
-      password = @row["user_password"]
+      password = @row["user_pass"]
     end
     begin
-      statment= @client.prepare("update users set username = ? , user_password= ? , email = ? ,address = ? where id = ? ")
-      statment.execute(params[:session][:username],password,params[:session][:email],params[:session][:address],@row["id"])
+      statment= @client.prepare("update users set username = ? , user_password= aes_encrypt(?,?) , email = ? ,address = ? where id = ? ")
+      statment.execute(params[:session][:username],password,"omarmostafa",params[:session][:email],params[:session][:address],@row["id"])
       redirect_to user_path(@row["id"])
     rescue Exception => e
       flash[:danger] = e.message
@@ -72,8 +72,13 @@ class UsersController <  ApplicationController
       render 'new'
     else
       begin
-        statement = @client.prepare("insert into users(email,username,user_password,admin,address) values(?,?,?,?,?);")
-        statement.execute(params[:session][:email],params[:session][:username],params[:session][:password],0,params[:session][:address])
+        statement = @client.prepare("insert into users(email,username,user_password,admin,address) values(?,?,aes_encrypt(?,?),?,?);")
+        #statement2 = @client.prepare("select aes_encrypt(? , ?) as col")
+        #pass1=statement2.execute(params[:session][:password], "omarmostafa")
+        #@pass2 = pass1.first
+        #pass3 = @pass2["col"]
+
+        statement.execute(params[:session][:email],params[:session][:username],params[:session][:password],"omarmostafa",0,params[:session][:address])
         semi = '\''
         @result = @client.query("select * from users where  email = #{semi}#{params[:session][:email]}#{semi};")
         @row = @result.first

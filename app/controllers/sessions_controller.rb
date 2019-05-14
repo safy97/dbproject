@@ -8,14 +8,16 @@ class SessionsController < ApplicationController
 
   def create
     username = params[:session][:username]
-    statment = @client.prepare("select * from users where username = ?")
+    statment = @client.prepare("select id , aes_decrypt(user_password,'omarmostafa') as user_pass from users where username = ?")
     @result = statment.execute(username)
     @row = @result.first
     if @row.nil?
         flash[:danger] = "username not found --to be edited flash"
         render 'login'
     else
-      password = @row["user_password"]
+
+      password = @row["user_pass"]
+
       if password != params[:session][:password]
         flash[:danger] = "password is wrong"
         render 'login'
