@@ -22,7 +22,7 @@
           <%= link_to "Add Author",new_author_path, class: "dropdown-item" %>
           <%= link_to "Users",users_path, class: "dropdown-item" %>
           <%= link_to "Add Book",new_book_path, class: "dropdown-item" %>
-          <a class="dropdown-item" href="#">Action</a>
+          <%= link_to "Orders",'/orders', class: "dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to "Reports",'/reports', class: "dropdown-item" %>
         </div>
@@ -30,7 +30,7 @@
       <% end %>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <% if session[:id] %>
+      <% if session["id"] %>
         <%= link_to "Your Cart", "/cart/#{session["id"]}/", method: :get, class:"nav-link mylinks" %>
         <%= link_to "Profile", user_path(session[:id]), class: "nav-link mylinks" %>
         <%= link_to "Edit Profile", edit_user_path(session[:id]), class: "nav-link mylinks" %>

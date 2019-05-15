@@ -6,7 +6,9 @@ module ApplicationHelper
       getUserQuery = "SELECT * FROM users WHERE id = #{session[:id]};"
       getUserRecord = client.query(getUserQuery).first
       puts "Admin"
-      puts getUserRecord["username"]
+      if getUserRecord == nil
+        return false
+      end
 
       if getUserRecord["admin"] == 0
         return false
@@ -15,4 +17,10 @@ module ApplicationHelper
       end
     end
   end
+
+  def user?
+    puts sessions[:id]
+    return session[:id]
+  end
+
 end

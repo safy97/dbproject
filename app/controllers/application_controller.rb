@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
       getUserQuery = "SELECT * FROM users WHERE id = #{session[:id]};"
       getUserRecord = client.query(getUserQuery).first
       puts "Admin"
-      puts getUserRecord["username"]
 
       if getUserRecord["admin"] == 0
         return false
